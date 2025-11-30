@@ -1,4 +1,4 @@
-import selenium.webdriver
+from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,18 +8,18 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 import random
 
-# Configuración de login (opcional)
+# Configuración de login (opcional - deja None para anónimo)
 TIKTOK_USERNAME = None  # Pon tu usuario aquí si quieres login
 TIKTOK_PASSWORD = None  # Pon tu contraseña aquí si quieres login
-USE_LOGIN = False  # Cambia a True si quieres usar login
+USE_LOGIN = False  # Cambia a True SI configuras usuario/pass arriba
 
-print("🚀 Iniciando TikTok View Booster (versión estable con login opcional)")
+print("🚀 Iniciando TikTok View Booster (versión estable con webdriver-manager)")
 
 def create_driver():
     try:
         print("📥 Descargando ChromeDriver automáticamente...")
-        options = selenium.webdriver.ChromeOptions()
-        # Quita el comentario para modo invisible: options.add_argument('--headless')
+        options = webdriver.ChromeOptions()
+        # Para modo invisible: options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--disable-blink-features=AutomationControlled')
@@ -29,7 +29,7 @@ def create_driver():
         options.add_argument('--window-size=1920,1080')
         
         service = Service(ChromeDriverManager().install())
-        driver = selenium.webdriver.Chrome(service=service, options=options)
+        driver = webdriver.Chrome(service=service, options=options)
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         print("✅ Driver creado exitosamente!")
         return driver
